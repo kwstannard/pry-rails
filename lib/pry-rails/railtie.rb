@@ -5,6 +5,7 @@ module PryRails
     console do
       require 'pry'
       require 'pry-rails/commands'
+      Pry::CLI.parse_options
 
       if Rails::VERSION::MAJOR == 3
         Rails::Console::IRB = Pry
