@@ -15,3 +15,6 @@ gem "test-unit"
 
 # Specify your gem's dependencies in pry-rails.gemspec
 gemspec
+
+gem 'rails'
+gem 'sqlite3'
