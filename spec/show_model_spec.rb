@@ -40,12 +40,12 @@ MODEL
 
   it "should print an error if the model doesn't exist" do
     output = mock_pry('show-model FloojBulb', 'exit-all')
-    _(output).must_match /Couldn't find model FloojBulb!\n/
+    _(output).must_match "Couldn't find model FloojBulb!\n"
   end
 
   it "should print an error if it doesn't know what to do with the model" do
     output = mock_pry('show-model PryRails', 'exit-all')
-    _(output).must_match /Don't know how to show PryRails!\n/
+    _(output).must_match "Don't know how to show PryRails!\n"
   end
 
   it "should print help if no model name is given" do
