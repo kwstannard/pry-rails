@@ -3,25 +3,14 @@
 require 'spec_helper'
 
 describe "find-route" do
-  before do
-    routes = Rails.application.routes
-    routes.draw {
-      namespace :admin do
-        resources :users
-        resources :images
-      end
-    }
-    routes.finalize!
-  end
-
   it 'returns the route for a single action' do
-    output = mock_pry('find-route Admin::UsersController#show', 'exit-all')
+    output = mock_pry('find-route Admin::CarsController#show', 'exit-all')
     _(output).must_match(/show GET/)
     _(output).wont_match(/index GET/)
   end
 
   it 'returns all the routes for a controller' do
-    output = mock_pry('find-route Admin::UsersController', 'exit-all')
+    output = mock_pry('find-route Admin::CarsController', 'exit-all')
     _(output).must_match(/index GET/)
     _(output).must_match(/show GET/)
     _(output).must_match(/new GET/)
@@ -33,8 +22,8 @@ describe "find-route" do
 
   it 'returns all routes for controllers under a namespace' do
     output = mock_pry('find-route Admin', 'exit-all')
-    _(output).must_match(/Routes for Admin::UsersController/)
-    _(output).must_match(/Routes for Admin::ImagesController/)
+    _(output).must_match(/Routes for Admin::CarsController/)
+    _(output).must_match(/Routes for Admin::TrucksController/)
   end
 
   it 'returns no routes found when controller is not recognized' do
