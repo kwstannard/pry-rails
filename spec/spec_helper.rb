@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'logger'
 require 'config/environment'
 
 # Pry testing stuff (taken from Pry itself)

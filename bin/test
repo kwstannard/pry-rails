@@ -1,0 +1,48 @@
+#! /usr/bin/env ruby
+# frozen_string_literals: true
+
+require 'optparse'
+require 'open3'
+
+skip_build = false
+
+OptionParser.new {|opt|
+  opt.banner = "Usage: bin/test [options]"
+  opt.on("-B", "--skip-build") { skip_build = true }
+}.parse!
+
+ruby_versions = ['3.2', '3.3', '3.4']
+rails_versions = ['~>7', '~>8']
+
+ruby_versions.product(rails_versions).reject { |ruby_v, rails_v|
+  container_file = <<~CF
+  FROM docker.io/ruby:#{ruby_v}-slim
+  RUN apt-get update \
+    && apt-get install -y build-essential git pkg-config libyaml-dev \
+    && mkdir -p /pry-rails
+  WORKDIR /pry-rails
+  ENV RAILS_VERSION="#{rails_v}" LANG=C.UTF-8
+  COPY Gemfile *.gemspec .
+  COPY lib/pry-rails/version.rb lib/pry-rails/version.rb
+  RUN bundle install
+  CMD bundle exec rake
+  CF
+
+  puts "# ruby:#{ruby_v} rails:#{rails_v}\n"
+
+  Open3.popen3("/usr/bin/env docker build -qf - -t pry-rails-#{ruby_v}-#{rails_v[-1]} .") { |i,o,e,wt|
+    i.puts container_file
+    i.close
+    o.each { STDOUT.puts _1 }
+    e.each { STDERR.puts _1 }
+    exitstatus = wt.value.exitstatus
+    exit exitstatus unless exitstatus == 0
+  } unless skip_build
+
+  system("/usr/bin/env docker run -v .:/pry-rails pry-rails-#{ruby_v}-#{rails_v[-1]}")
+}
+  .tap {|failures| puts (failures.any? ? "FAILURES:" : "ALL CLEAR!") }
+  .each {|ruby_v, rails_v|
+    puts "# ruby:#{ruby_v} rails:#{rails_v}"
+  }
+  .then {|failures| exit(failures.any? ? 1 : 0 ) }

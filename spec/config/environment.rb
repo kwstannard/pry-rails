@@ -14,12 +14,14 @@ end
 class TestApp < Rails::Application
   config.active_support.deprecation = :log
   config.eager_load = false
+  config.active_storage.service = :local
 
   config.secret_token = 'a' * 100
 
   config.root = File.expand_path('../..', __FILE__)
 end
 
+ENV['SECRET_KEY_BASE_DUMMY'] = '1'
 TestApp.initialize!
 
 # Create in-memory database

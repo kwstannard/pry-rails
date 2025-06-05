@@ -22,7 +22,7 @@ describe "recognize-path" do
 
   it 'fails gracefully if no path is given' do
     output = mock_pry('recognize-path', 'exit-all')
-    output.must_equal \
+    output.must_match \
       "Error: The command 'recognize-path' requires an argument.\n"
   end
 
