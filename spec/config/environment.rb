@@ -65,6 +65,12 @@ class Pokemon < ActiveRecord::Base
   has_many :beers, :through => :hacker
 end
 
+CarsController = Class.new(ActionController::Base)
+module Admin
+  CarsController = Class.new(ActionController::Base)
+  TrucksController = Class.new(ActionController::Base)
+end
+
 if defined?(Mongoid)
   class Artist
     include Mongoid::Document

@@ -14,7 +14,6 @@ class PryRails::ShowRoutes < Pry::ClassCommand
   end
 
   def process
-    Rails.application.reload_routes!
     all_routes = Rails.application.routes.routes
 
     formatted =
