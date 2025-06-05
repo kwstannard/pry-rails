@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PryRails::FindRoute < Pry::ClassCommand
   match 'find-route'
   group 'Rails'
@@ -51,7 +52,7 @@ class PryRails::FindRoute < Pry::ClassCommand
     all_routes = routes.select(&block)
     if all_routes.any?
       grouped_routes = all_routes.group_by { |route| route.defaults[:controller] }
-      result = grouped_routes.each_with_object("") do |(controller, routes), res|
+      result = grouped_routes.each_with_object(String.new) do |(controller, routes), res|
         res << "Routes for " + bold(controller.to_s.camelize + "Controller") + "\n"
         res << "--\n"
         routes.each do |route|
