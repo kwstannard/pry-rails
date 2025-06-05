@@ -43,11 +43,41 @@ Instrument
 MODELS
 
     internal_models = <<MODELS
-ActiveRecord::InternalMetadata
-  key: string
-  value: string
-  created_at: datetime
-  updated_at: datetime
+\e[0GActionMailbox::InboundEmail
+  Table doesn't exist
+  has_one :raw_email_attachment (class_name :ActiveStorage::Attachment)
+  has_one :raw_email_blob (through :raw_email_attachment, class_name :ActiveStorage::Blob)
+ActionMailbox::Record
+  Table doesn't exist
+ActionText::EncryptedRichText
+  Table doesn't exist
+  belongs_to :record
+  has_many :embeds_attachments (class_name :ActiveStorage::Attachment)
+  has_many :embeds_blobs (through :embeds_attachments, class_name :ActiveStorage::Blob)
+ActionText::Record
+  Table doesn't exist
+ActionText::RichText
+  Table doesn't exist
+  belongs_to :record
+  has_many :embeds_attachments (class_name :ActiveStorage::Attachment)
+  has_many :embeds_blobs (through :embeds_attachments, class_name :ActiveStorage::Blob)
+ActiveStorage::Attachment
+  Table doesn't exist
+  belongs_to :blob (class_name :ActiveStorage::Blob)
+  belongs_to :record
+ActiveStorage::Blob
+  Table doesn't exist
+  has_many :attachments
+  has_many :variant_records (class_name :ActiveStorage::VariantRecord)
+  has_one :preview_image_attachment (class_name :ActiveStorage::Attachment)
+  has_one :preview_image_blob (through :preview_image_attachment, class_name :ActiveStorage::Blob)
+ActiveStorage::Record
+  Table doesn't exist
+ActiveStorage::VariantRecord
+  Table doesn't exist
+  belongs_to :blob
+  has_one :image_attachment (class_name :ActiveStorage::Attachment)
+  has_one :image_blob (through :image_attachment, class_name :ActiveStorage::Blob)
 MODELS
 
     expected_output = ar_models

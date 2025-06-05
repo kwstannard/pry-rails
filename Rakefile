@@ -2,7 +2,6 @@ require "rubygems"
 require "bundler/setup"
 require "bundler/gem_tasks"
 require "rake/testtask"
-require "appraisal"
 
 Rake::TestTask.new do |t|
   t.libs.concat %w(pry-rails spec)

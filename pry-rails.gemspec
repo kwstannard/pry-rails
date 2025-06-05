@@ -15,12 +15,9 @@ Gem::Specification.new do |s|
 
   # s.rubyforge_project = "pry-rails"
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
+  s.files         = Dir['lib/**/*']
+  s.test_files    = Dir['spec/**/*']
 
   s.add_dependency "pry", ">= 0.13.0"
-  s.add_development_dependency "appraisal"
   s.add_development_dependency "minitest"
 end

@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 require 'spec_helper'
+require 'logger'
 
 if (Rails::VERSION::MAJOR == 5 && Rails::VERSION::MINOR >= 1) ||
     Rails::VERSION::MAJOR >= 6
