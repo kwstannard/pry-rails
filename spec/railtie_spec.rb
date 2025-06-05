@@ -36,7 +36,7 @@ describe PryRails::Railtie do
     end
 
     %w(app helper reload!).each do |helper|
-      TOPLEVEL_BINDING.eval("respond_to?(:#{helper}, true)").must_equal true
+      _(TOPLEVEL_BINDING.eval("respond_to?(:#{helper}, true)")).must_equal true
     end
   end
 end

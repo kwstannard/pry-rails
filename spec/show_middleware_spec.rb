@@ -6,9 +6,9 @@ describe "show-middleware" do
   it "should print a list of middleware" do
     output = mock_pry('show-middleware', 'exit-all')
 
-    output.must_match %r{^use ActionDispatch::Static$}
-    output.must_match %r{^use ActionDispatch::ShowExceptions$}
-    output.must_match %r{^run TestApp.routes\Z}
+    _(output).must_match %r{^use ActionDispatch::Static$}
+    _(output).must_match %r{^use ActionDispatch::ShowExceptions$}
+    _(output).must_match %r{^run TestApp.routes\Z}
   end
 end
 

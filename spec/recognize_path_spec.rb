@@ -22,36 +22,36 @@ describe "recognize-path" do
 
   it 'fails gracefully if no path is given' do
     output = mock_pry('recognize-path', 'exit-all')
-    output.must_match \
+    _(output).must_match \
       "Error: The command 'recognize-path' requires an argument.\n"
   end
 
   it "prints info about controller/action that is bound to the given path" do
     output = mock_pry('recognize-path example.com', 'exit-all')
-    output.must_match(/controller.+foo/)
-    output.must_match(/action.+index/)
+    _(output).must_match(/controller.+foo/)
+    _(output).must_match(/action.+index/)
   end
 
   it "accepts short path" do
     output = mock_pry('recognize-path /booms/1/edit', 'exit-all')
-    output.must_match(/action.+edit/)
-    output.must_match(/controller.+booms/)
-    output.must_match(/id.+1/)
+    _(output).must_match(/action.+edit/)
+    _(output).must_match(/controller.+booms/)
+    _(output).must_match(/id.+1/)
   end
 
   it "accepts -m switch" do
     output = mock_pry('recognize-path example.com/booms -m post', 'exit-all')
-    output.must_match(/controller.+booms/)
-    output.must_match(/action.+create/)
+    _(output).must_match(/controller.+booms/)
+    _(output).must_match(/action.+create/)
   end
 
   it "doesn't accept unknown methods" do
     output = mock_pry('recognize-path example.com/booms -m posty', 'exit-all')
-    output.must_match 'Unknown HTTP method: posty'
+    _(output).must_match 'Unknown HTTP method: posty'
   end
 
   it "doesn't accept unknown routes" do
     output = mock_pry('recognize-path bing/bang/bong', 'exit-all')
-    output.must_match 'No route matches "http://bing/bang/bong"'
+    _(output).must_match 'No route matches "http://bing/bang/bong"'
   end
 end

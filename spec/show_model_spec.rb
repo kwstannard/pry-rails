@@ -17,7 +17,7 @@ Beer
   belongs_to :hacker
 MODEL
 
-    output.must_match expected
+    _(output).must_match expected
   end
 
   if defined? Mongoid
@@ -34,22 +34,22 @@ MODEL
 
       output.gsub!(/^ *_type: String\n/, '') # mongoid 3.0 and 3.1 differ on this
       output.gsub!(/Moped::BSON/, 'BSON')    # mongoid 3 and 4 differ on this
-      output.must_match expected
+      _(output).must_match expected
     end
   end
 
   it "should print an error if the model doesn't exist" do
     output = mock_pry('show-model FloojBulb', 'exit-all')
-    output.must_match /Couldn't find model FloojBulb!\n/
+    _(output).must_match /Couldn't find model FloojBulb!\n/
   end
 
   it "should print an error if it doesn't know what to do with the model" do
     output = mock_pry('show-model PryRails', 'exit-all')
-    output.must_match /Don't know how to show PryRails!\n/
+    _(output).must_match /Don't know how to show PryRails!\n/
   end
 
   it "should print help if no model name is given" do
     output = mock_pry('show-model', 'exit-all')
-    output.must_match(/Usage: show-model/)
+    _(output).must_match(/Usage: show-model/)
   end
 end

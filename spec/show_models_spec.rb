@@ -92,7 +92,7 @@ MODELS
       expected_output = internal_models + expected_output
     end
 
-    output.must_equal expected_output
+    _(output).must_equal expected_output
   end
 
   it "should highlight the given phrase with --grep" do
@@ -101,12 +101,12 @@ MODELS
 
       output = mock_pry('show-models --grep rating', 'exit-all')
 
-      output.must_include "Beer"
-      output.must_include "\e[7mrating\e[27m"
-      output.wont_include "Pokemon"
+      _(output).must_include "Beer"
+      _(output).must_include "\e[7mrating\e[27m"
+      _(output).wont_include "Pokemon"
 
       if defined?(Mongoid)
-        output.wont_include "Artist"
+        _(output).wont_include "Artist"
       end
     ensure
       Pry.color = false
@@ -116,7 +116,7 @@ MODELS
   if defined?(Mongoid)
     it "should also filter for mongoid" do
       output = mock_pry('show-models --grep beer', 'exit-all')
-      output.must_include 'Artist'
+      _(output).must_include 'Artist'
     end
   end
 end
