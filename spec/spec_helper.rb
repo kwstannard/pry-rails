@@ -22,12 +22,13 @@ def redirect_pry_io(new_in, new_out = StringIO.new)
 end
 
 def mock_pry(*args)
-  binding = args.first.is_a?(Binding) ? args.shift : binding()
   input   = StringIO.new(args.join("\n"))
   output  = StringIO.new
 
   redirect_pry_io(input, output) do
-    Pry.start(binding, :hooks => Pry::Hooks.new)
+    $stdout = StringIO.new
+    Rails::Console.start(Rails.application)
+    $stdout = STDOUT
   end
 
   output.string
