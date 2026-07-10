@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: cimg/base:current
+
+    steps:
+      - checkout
+      - run:
+          command: "bin/test"
+
+workflows:
+  build:
+    jobs:
+      - test
