@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: cimg/base:current
+      - image: cimg/ruby:current
 
     steps:
       - checkout
