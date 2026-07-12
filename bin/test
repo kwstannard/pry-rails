@@ -11,7 +11,7 @@ OptionParser.new {|opt|
   opt.on("-B", "--skip-build") { skip_build = true }
 }.parse!
 
-ruby_versions = ['3.2', '3.3', '3.4']
+ruby_versions = ['3.4', '4.0']
 rails_versions = ['~>7', '~>8']
 
 ruby_versions.product(rails_versions).reject { |ruby_v, rails_v|
