@@ -2,11 +2,11 @@ version: 2.1
 
 jobs:
   test:
-    docker:
-      - image: cimg/ruby:4.0
+    machine:
+      image: cimg/ruby:4.0
+    resource_class: medium.gen2
 
     steps:
-      - setup_remote_docker
       - checkout
       - run:
           command: "bin/test"
